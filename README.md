@@ -4,14 +4,7 @@
 
 ## Step-by-Step Setup
 
-### Step 1 — Clone the repository
-
-```bash
-git clone <repository-url>
-cd test-nuxgame
-```
-
-### Step 2 — Create environment file
+### Step 1 — Create environment file
 
 ```bash
 cp .env.example .env
@@ -36,7 +29,7 @@ PAGE_TOKEN_TTL_DAYS=7   # unique link lifetime in days
 
 > **Note:** `DB_HOST=db` refers to the Docker Compose service name. Do not change it to `localhost` or `127.0.0.1`.
 
-### Step 3 — Build and start containers
+### Step 2 — Build and start containers
 
 ```bash
 docker compose up -d --build
@@ -45,20 +38,15 @@ docker compose up -d --build
 Expected output:
 
 ```
-✔ Container test-nuxgame-db-1     Healthy
-✔ Container test-nuxgame-app-1    Started
-✔ Container test-nuxgame-nginx-1  Started
+✔ Container nuxgame-test-db-1     Healthy
+✔ Container nuxgame-test-app-1    Started
+✔ Container nuxgame-test-nginx-1  Started
 ```
 
 The `app` container waits for MySQL to pass its healthcheck before starting. This may take 10–20 seconds on first run.
 
-Check that all three containers are running:
 
-```bash
-docker compose ps
-```
-
-### Step 4 — Generate application key
+### Step 3 — Generate application key
 
 ```bash
 docker compose exec app php artisan key:generate
@@ -70,7 +58,7 @@ Expected output:
 INFO  Application key set successfully.
 ```
 
-### Step 5 — Run database migrations
+### Step 4 — Run database migrations
 
 ```bash
 docker compose exec app php artisan migrate
@@ -86,7 +74,7 @@ INFO  Running migrations.
   0001_01_01_000002_create_lucky_histories_table ... 3ms DONE
 ```
 
-### Step 6 — Open the application
+### Step 5 — Open the application
 
 Open in your browser:
 

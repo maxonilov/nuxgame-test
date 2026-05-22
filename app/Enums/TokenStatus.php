@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum TokenStatus: int
 {
-    case Active   = 1;
+    case Active = 1;
     case Inactive = 2;
 }

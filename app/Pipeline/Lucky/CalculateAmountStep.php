@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pipeline\Lucky;
 
 use App\Dto\Lucky\SpinPayload;
 use App\Strategies\LuckyContext;
 use Closure;
 
-final class CalculateAmountStep
+class CalculateAmountStep
 {
-    /**
-     * @param SpinPayload $payload
-     * @param Closure $next
-     * @return mixed
-     */
     public function handle(SpinPayload $payload, Closure $next): mixed
     {
         if ($payload->isWin) {

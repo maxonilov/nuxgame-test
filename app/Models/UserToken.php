@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\UserTokenBuilder;
 use App\Enums\TokenStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -14,8 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property TokenStatus $status {@see TokenStatus}
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property User $user
+ *
+ * @method static UserTokenBuilder query()
  */
 class UserToken extends Model
 {
@@ -25,17 +27,16 @@ class UserToken extends Model
         'status' => TokenStatus::class,
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return bool
-     */
+    public function newEloquentBuilder($query): UserTokenBuilder
+    {
+        return new UserTokenBuilder($query);
+    }
+
     public function isExpired(): bool
     {
         return $this->created_at

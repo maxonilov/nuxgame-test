@@ -9,25 +9,13 @@ use Illuminate\View\View;
 
 class RegistrationController extends Controller
 {
-    /**
-     * @param RegisterServiceInterface $register
-     */
-    public function __construct(private readonly RegisterServiceInterface $register)
-    {
-    }
+    public function __construct(private readonly RegisterServiceInterface $register) {}
 
-    /**
-     * @return View
-     */
     public function show(): View
     {
         return view('register');
     }
 
-    /**
-     * @param RegisterRequest $request
-     * @return RedirectResponse
-     */
     public function register(RegisterRequest $request): RedirectResponse
     {
         return redirect()->route(

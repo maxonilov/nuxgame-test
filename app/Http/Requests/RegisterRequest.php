@@ -17,14 +17,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'     => ['required', 'string', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'phone_number' => ['required', 'string', 'regex:/^\+?[\d\s\-\(\)]{7,20}$/', 'unique:users'],
         ];
     }
 
-    /**
-     * @return RegisterDto
-     */
     public function toDto(): RegisterDto
     {
         return new RegisterDto(

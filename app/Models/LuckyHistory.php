@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\LuckyHistoryBuilder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,8 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $amount
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property User $user
+ *
+ * @method static LuckyHistoryBuilder query()
  */
 class LuckyHistory extends Model
 {
@@ -23,12 +25,14 @@ class LuckyHistory extends Model
 
     protected $casts = [
         'is_win' => 'boolean',
-        'amount' => 'float'
+        'amount' => 'float',
     ];
 
-    /**
-     * @return BelongsTo
-     */
+    public function newEloquentBuilder($query): LuckyHistoryBuilder
+    {
+        return new LuckyHistoryBuilder($query);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

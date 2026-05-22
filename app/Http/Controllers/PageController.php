@@ -10,20 +10,11 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    /**
-     * @param TokenServiceInterface $tokenService
-     * @param RegisterServiceInterface $userService
-     */
     public function __construct(
         private readonly TokenServiceInterface $tokenService,
         private readonly RegisterServiceInterface $userService,
-    ) {
-    }
+    ) {}
 
-    /**
-     * @param PageRequest $request
-     * @return View
-     */
     public function show(PageRequest $request): View
     {
         return view('page', [
@@ -31,10 +22,6 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * @param PageRequest $request
-     * @return RedirectResponse
-     */
     public function regenerate(PageRequest $request): RedirectResponse
     {
         return redirect()->route(
@@ -43,10 +30,6 @@ class PageController extends Controller
         );
     }
 
-    /**
-     * @param PageRequest $request
-     * @return RedirectResponse
-     */
     public function deactivate(PageRequest $request): RedirectResponse
     {
         $this->userService->deactivate($request->getPageToken());

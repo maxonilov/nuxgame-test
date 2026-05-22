@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Contracts\RegisterServiceInterface;
 use App\Contracts\TokenServiceInterface;
-use App\Contracts\UserRepositoryInterface;
 use App\Dto\User\RegisterDto;
 use App\Dto\User\TokenDto;
 use App\Models\User;
@@ -14,24 +15,15 @@ use Illuminate\Support\Facades\DB;
 
 readonly class UserService implements RegisterServiceInterface
 {
-    /**
-     * @param UserRepositoryInterface $userRepository
-     * @param TokenServiceInterface $tokenService
-     */
-    public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private TokenServiceInterface $tokenService,
-    ) {
-    }
+    public function __construct(private TokenServiceInterface $tokenService) {}
 
     /**
-     * @inheritDoc
      * @throws \Throwable
      */
     public function make(RegisterDto $dto): UserToken
     {
         return DB::transaction(function () use ($dto) {
-            $user = $this->userRepository->create($dto->toArray());
+            $user = User::query()->create($dto->toArray());
 
             return $this->tokenService->store(
                 new TokenDto(
@@ -42,7 +34,6 @@ readonly class UserService implements RegisterServiceInterface
     }
 
     /**
-     * @inheritDoc
      * @throws \Throwable
      */
     public function deactivate(UserToken $token): void
@@ -52,10 +43,6 @@ readonly class UserService implements RegisterServiceInterface
         Auth::logout();
     }
 
-    /**
-     * @param User $user
-     * @return User
-     */
     private function authorize(User $user): User
     {
         Auth::login($user);

@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pipeline\Lucky;
 
 use App\Dto\Lucky\SpinPayload;
 use Closure;
 use Random\RandomException;
 
-final class GenerateNumberStep
+class GenerateNumberStep
 {
     /**
-     * @param SpinPayload $payload
-     * @param Closure $next
-     * @return mixed
      * @throws RandomException
      */
     public function handle(SpinPayload $payload, Closure $next): mixed

@@ -9,7 +9,7 @@ use App\Strategies\Lucky\Above600Strategy;
 use App\Strategies\Lucky\Above900Strategy;
 use App\Strategies\Lucky\DefaultStrategy;
 
-final class LuckyContext
+class LuckyContext
 {
     /** @var class-string<LuckyStrategyInterface>[] */
     private const array STRATEGIES = [
@@ -19,14 +19,10 @@ final class LuckyContext
         DefaultStrategy::class,
     ];
 
-    /**
-     * @param int $number
-     * @return LuckyStrategyInterface
-     */
     public static function getByNumber(int $number): LuckyStrategyInterface
     {
         foreach (self::STRATEGIES as $strategyClass) {
-            $strategy = new $strategyClass();
+            $strategy = new $strategyClass;
 
             if ($strategy->supports($number)) {
                 return $strategy;

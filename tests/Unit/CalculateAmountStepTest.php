@@ -13,17 +13,17 @@ class CalculateAmountStepTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->step = new CalculateAmountStep();
+        $this->step = new CalculateAmountStep;
     }
 
     #[DataProvider('winAmountProvider')]
     public function test_calculates_correct_amount_per_range(int $number, float $expected): void
     {
-        $payload         = new SpinPayload(userId: 1);
+        $payload = new SpinPayload(userId: 1);
         $payload->number = $number;
-        $payload->isWin  = true;
+        $payload->isWin = true;
 
-        $this->step->handle($payload, fn($p) => $p);
+        $this->step->handle($payload, fn ($p) => $p);
 
         $this->assertEqualsWithDelta($expected, $payload->amount, 0.001);
     }
@@ -40,11 +40,11 @@ class CalculateAmountStepTest extends TestCase
 
     public function test_amount_stays_zero_when_not_win(): void
     {
-        $payload         = new SpinPayload(userId: 1);
+        $payload = new SpinPayload(userId: 1);
         $payload->number = 951;
-        $payload->isWin  = false;
+        $payload->isWin = false;
 
-        $this->step->handle($payload, fn($p) => $p);
+        $this->step->handle($payload, fn ($p) => $p);
 
         $this->assertEquals(0.0, $payload->amount);
     }
